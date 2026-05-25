@@ -1,0 +1,30 @@
+--- 
+- name: Create File and Directory 
+  hosts: all
+  become: true 
+
+  tasks: 
+    - name: Create App Directory 
+      file:
+        path: /opt/app_dir
+        state: directory 
+        mode: '0755'
+        owner: root
+        group: root
+   
+    - name: Create log Directory  
+      file: 
+        path: /var/log/app_dir_log
+        state: directory 
+        owner: root
+        group: root
+        mode: '0755'
+   
+    - name: Create Empty File
+      file: 
+        path: /var/log
+        state: touch 
+        mode: '0644'
+
+
+          

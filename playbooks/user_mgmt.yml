@@ -1,0 +1,56 @@
+--- 
+- name: Enterprise User Management 
+  hosts: webservers
+  become: yes 
+
+  vars:
+    users:
+      - username: devops1
+        uid: 3001
+        groups: wheel,docker
+        password: "{{ 'Redhat@123' | password_hash('sha512') }}" 
+
+      - username: automation1
+        uid: 3002
+        groups: wheel
+        password: "{{ 'Ansible@123' | password_hash('sha512') }}" 
+
+  tasks: 
+    - name: Create a group
+      group: 
+        name: docker
+        state: present
+
+    - name: Create Users 
+      user: 
+        name: "{{ item.username }}"
+        uid: "{{ item.uid }}"
+        groups: "{{ item.groups }}"
+        append: yes
+        shell: /bin/bash
+        create_home: yes
+        password: "{{ item.password }}"
+        state: present
+      loop: "{{ users }}" 
+
+    - name: Create SSH Directory
+      file: 
+        path: "/home/{{ item.username }}/.ssh"
+        state: directory
+        owner: "{{ item.username }}"
+        group: "{{ item.username }}"
+        mode: '0700'
+      loop: "{{ users }}"
+
+    - name: Deploy SSH Authorized Key 
+      copy: 
+        src: /home/ansible/ansible-project/files/id_rsa.pub
+        dest: "/home/{{ item.username }}/.ssh/authorized_keys"
+        owner: "{{ item.username }}" 
+        mode: '0600'
+      loop: "{{ users }}"
+
+
+
+
+

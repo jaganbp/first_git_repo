@@ -1,0 +1,13 @@
+---
+- name: Setting SElinux Configurations
+  hosts: webservers
+  become: yes
+  vars: 
+    se_status: permissive 
+
+  tasks: 
+    - name: Changing SElinux Configurations
+      lineinfile:
+        path: /etc/selinux/config
+        regexp: '^SELINUX='
+        line: 'SELINUX={{ se_status }}'

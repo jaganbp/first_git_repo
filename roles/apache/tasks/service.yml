@@ -1,0 +1,14 @@
+--- 
+- name: Start the Apache Service
+  service:
+    name: httpd
+    state: started
+    enabled: true
+
+- name: Copy index file to machine
+  copy: 
+    src: templates/index.j2
+    dest: /var/www/html/
+  notify:
+    - Restart Apache Service   
+

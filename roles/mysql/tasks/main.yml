@@ -1,0 +1,13 @@
+---
+- import_tasks: installdb.yml
+- import_tasks: dbservice.yml
+- import_tasks: firewallconfig.yml
+- import_tasks: createdb.yml
+- import_tasks: createdbuser.yml      
+- import_tasks: configuredbaccess.yml
+
+
+
+
+
+

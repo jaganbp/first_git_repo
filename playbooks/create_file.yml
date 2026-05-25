@@ -1,0 +1,24 @@
+--- 
+- name: Creating files
+  hosts: webservers
+  become: true
+    
+  tasks: 
+    - name: Creating backup Directory 
+      file: 
+        path: /backup
+        state: directory 
+        owner: root
+        group: root
+        mode: '0755'
+     
+    - name: Creating backup-logs 
+      file: 
+        path: /backup/logs
+          #state: file
+        state: touch   
+        owner: root
+        group: root
+        mode: '0644'
+
+

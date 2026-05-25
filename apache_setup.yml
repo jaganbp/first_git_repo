@@ -1,0 +1,5 @@
+---
+- hosts: testservers
+  become: true
+  roles:
+    - apache

@@ -1,0 +1,91 @@
+--- 
+- name: Enterprise Project Deployment
+  hosts: webservers
+  become: true
+
+  tasks: 
+    - name: Create Project Directory 
+      file:
+        path: /project
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: Create Config Directory 
+      file:
+        path: /project/config
+        state: directory
+        mode: '0755'    
+
+    - name: Create Logs Directory 
+      file: 
+        path: /project/logs
+        state: directory
+        mode: '0755'
+  
+    - name: Copy Application config      
+      copy: 
+        src: /home/ansible/ansible-project/files/app.conf
+        dest: /project/config/app.conf
+        owner: root
+        group: root
+        mode: '0640'
+        backup: yes
+
+    - name: Deploy application webpage
+      template:
+        src: /home/ansible/ansible-project/templates/index.j2
+        dest: /var/www/html/index.html
+        owner: apache
+        group: apache
+        mode: '0644'
+
+    - name: Set Secure permissions on project Directory
+      file: 
+        path: /project
+        mode: '0755'
+        recurse: yes
+
+#    SSH Hardening 
+
+    - name: Disable Root login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: 'PermitRootLogin'
+        line: 'PermitRootLogin no'
+        backup: yes
+
+    - name: Disable empty Passwords
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: 'PermitEmptyPasswords'
+        line: 'PermitEmptyPasswords no'
+
+    - name: Limit SSH Authentication attempts
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: 'MaxAuthTries'      
+        line: 'MaxAuthTries 3'   
+
+    - name: Configre idle timeout
+      blockinfile: 
+        path: /etc/ssh/sshd_config
+        
+        block: |
+          clientAliveInterval 300
+          ClientAliveCountMax 0
+
+    - name: Restart SSH Service
+      service:
+        name: sshd
+        state: restarted      
+
+
+
+
+
+
+
+
+

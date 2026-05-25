@@ -1,0 +1,16 @@
+---
+- name: Creating Vars Playbook
+  hosts: webservers
+  become: yes
+  vars:
+    student_names:
+      - user1
+      - user2
+      - user3
+      - user4 
+
+  tasks:
+    - name: Calling Ansible Variable  
+      debug: 
+        msg: "{{ student_names[1] }}"
+        

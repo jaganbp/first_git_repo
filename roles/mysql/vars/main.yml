@@ -1,0 +1,5 @@
+---
+# vars file for /home/ansible/ansible-project/roles/mysql
+db_name: appdb
+db_user: appuser
+db_password: appuser@123

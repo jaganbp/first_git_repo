@@ -1,0 +1,10 @@
+---
+- name: Install telnet on webservers
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Telnet package 
+      yum:
+        name: telnet
+        state: present
+

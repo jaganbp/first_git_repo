@@ -1,0 +1,9 @@
+---
+- name: Configure MariaDB Remote Access
+  lineinfile:
+    path: /etc/my.cnf.d/mariadb-server.cnf
+    regexp: '^bind-address'
+    line: 'bind-address=0.0.0.0'
+  notify:
+    - Restart MariaDB
+

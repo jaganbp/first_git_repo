@@ -1,0 +1,10 @@
+--- 
+- name: Test Connectivity
+  hosts: webservers
+  become: yes
+  tasks: 
+    - name: Create devops user
+      user: 
+        name: devops
+        state: present
+        shell: /bin/bash   

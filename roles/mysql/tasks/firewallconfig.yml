@@ -1,0 +1,8 @@
+---
+- name: Configure firewall rules
+  firewalld:
+    service: mysql
+    permanent: yes
+    state: enabled 
+    immediate: yes 
+    

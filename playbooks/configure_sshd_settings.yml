@@ -1,0 +1,24 @@
+--- 
+- name: Configure SSH Settings
+  hosts: webservers
+  become: true 
+
+  tasks:
+    - name: Disable root login
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#Permitrootlogin'
+        line: 'Permitrootlogin no'
+        backup: yes 
+
+    - name: Change SSH Port
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^#Port 2020'
+        line: 'Port 22'
+        backup: yes 
+
+    - name: Restart SSH service
+      service:
+        name: sshd
+        state: restarted   

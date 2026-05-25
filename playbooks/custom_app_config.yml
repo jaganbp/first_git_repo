@@ -1,0 +1,15 @@
+---
+- name: Add Custom app config
+  hosts: webservers
+  become: yes
+
+  tasks:
+    - name: Add Application block
+      blockinfile:
+        path: /etc/profile
+        marker: "# ANSIBLE MANAGED BLOCK"
+
+        block: | 
+          export APP_ENV=production
+          export APP_PORT=9090
+          export APP_HOME= /opt/appdata

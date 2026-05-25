@@ -1,0 +1,22 @@
+--- 
+- name: Copying hosts files
+  hosts: webservers
+  become: true
+
+  tasks: 
+    - name: Copying hosts Files 
+      copy: 
+        src: /etc/hosts
+        dest: /tmp/hosts.bak
+      
+    - name: Adding Authentication Count to SSHD file 
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '#MaxAuthTries'
+        line: 'MaxAuthTries 5'
+    
+    - name: Restart SSH service
+      service: 
+        name: sshd
+        state: restarted
+              

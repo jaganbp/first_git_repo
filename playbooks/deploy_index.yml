@@ -1,0 +1,12 @@
+---
+- name: deploy template into Webservers
+  hosts: webservers
+  become: yes
+
+  tasks:
+    - name: Deploy template
+      template: 
+        src: /home/ansible/ansible-project/templates/index.j2
+        dest: /var/www/html/index.html
+
+

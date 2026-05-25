@@ -1,0 +1,16 @@
+
+[webservers]
+192.168.234.132
+192.168.234.133  
+
+[dbservers]
+192.168.234.135
+
+[appservers]
+#192.168.234.136
+
+[testservers]
+192.168.234.136
+
+[all:vars]
+ansible_user=ansible

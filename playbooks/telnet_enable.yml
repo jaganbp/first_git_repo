@@ -1,0 +1,10 @@
+--- 
+- name: Start and Enable Telnet service 
+  hosts: webservers
+  become: yes
+  tasks: 
+    - name: Start and enable Telnet
+      service: 
+        name: telnet
+        state: started
+        enabled: yes

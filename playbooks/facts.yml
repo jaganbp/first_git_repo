@@ -1,0 +1,9 @@
+--- 
+- name: Gather and display system facts
+  hosts: all
+  tasks: 
+    - name: Collect facts
+      setup:
+    - name: Show hostname and OS
+      debug:
+        msg: "{{ ansible_hostname }} is running {{ ansible_distribution }} {{ ansible_distribution_version }}"
