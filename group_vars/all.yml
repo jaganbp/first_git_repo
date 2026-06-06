@@ -1,0 +1,20 @@
+users: 
+  - username: devops1
+    uid: 1060
+    shell: /bin/bash
+    groups:
+      - wheel
+      - developers
+    password: "{{ 'password@123' | password_hash('sha512') }}"
+    ssh_key: "ssh-rsa AAAb3ncaxcle ..."
+    state: present
+
+
+  - username: appuser1
+    uid: 1061
+    shell: /bin/bash
+    groups:
+      - applications
+    password: "{{ 'App@123' | password_hash('sha512') }}"
+    state: present
+

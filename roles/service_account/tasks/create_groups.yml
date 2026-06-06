@@ -1,0 +1,5 @@
+- name: Create Groups
+  group: 
+    name: "{{ item.group }}"
+    state: present
+  loop: "{{ service_accounts }}"  

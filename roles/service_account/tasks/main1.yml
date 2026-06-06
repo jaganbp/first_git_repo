@@ -1,0 +1,37 @@
+---
+# tasks file for /home/ansible/ansible-project/roles/service_account
+- name: create Application Group
+  group:
+    name: paymentsgroup
+    gid: 2001
+    state: present
+
+- name: Create Service Account
+  user: 
+    name: paymentsvc 
+    uid: 2001
+    group: paymentsgroup
+    home: /opt/payments
+    shell: /sbin/nologin
+    create_home: yes
+    state: present 
+
+- name: Create SSH Directory 
+  file:
+    path: /opt/paymentsvc/.ssh
+    state: directory 
+    owner: paymentsvc
+    group: paymentsgroup  
+    mode: '0700'
+     
+- name: Create Applicatin Directory 
+  file: 
+    path: /opt/paymentsvc/app
+    state: directory
+    mode: '0755'
+    owner: paymentsvc
+    group: paymentsgroup
+    
+      
+
+
