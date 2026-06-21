@@ -1,0 +1,22 @@
+---
+- name: Displaying All sorts of variables
+  hosts: webservers
+  become: yes
+  vars: 
+    scalar_value: 2 
+    listofFruits:
+      - Apple
+      - Mango
+      - Guava 
+      - Seethaphal
+    DictionaryValues:
+      State: AP
+      District: Satya Sai
+      Village: Gorantla
+      Pincode: 515561
+
+  tasks:
+    - name: Displaying Scalar Varialbe Value, List Values, and Dictionary values
+      ansible.builtin.debug: 
+        msg: " Display Scalar Value: {{ scalar_value }}, Display List values: {{ listofFruits }}, Display DictionaryValues: {{ DictionaryValues }}" 
+
