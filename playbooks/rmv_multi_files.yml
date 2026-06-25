@@ -1,0 +1,31 @@
+---
+- name: Removing Multiple Files 
+  hosts: webservers
+  become: true 
+  gather_facts: false   
+  vars:
+    files:
+      - name: "File1"
+        mode: "0644"
+        directory: "/tmp"
+      
+      - name: "File2"
+        mode: "0644"
+        directory: "/tmp"
+           
+      - name: "File3"
+        mode: "0644"
+        directory: "/tmp" 
+
+  tasks: 
+
+  - name: Deleting Multiple Files 
+    file: 
+      path: "{{item.directory }}/ {{ item.name}}" 
+      state: absent 
+    loop: "{{files}}"    
+          
+  - name: Show what fils are being removed  
+    debug:
+      msg: "{{item.name}} is deleted in {{item.directory}} with permissions {{item.mode}}"
+    loop: "{{ files }}"  

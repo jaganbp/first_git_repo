@@ -1,0 +1,32 @@
+---
+- name: Creating Multiple Files 
+  hosts: webservers
+  become: true 
+  gather_facts: false   
+  vars:
+    files:
+      - name: "File4"
+        mode: "0644"
+        directory: "/tmp"
+      
+      - name: "File5"
+        mode: "0644"
+        directory: "/tmp"
+           
+      - name: "File6"
+        mode: "0644"
+        directory: "/tmp" 
+
+  tasks: 
+
+  - name: Creating Multiple Files 
+    file: 
+      path: "{{item.directory }}/{{ item.name}}" 
+      state: touch 
+      mode: "{{item.mode}}" 
+    loop: "{{files}}"    
+
+  - name: Show What files are created   
+    debug:
+      msg: "{{item.name}} is deleted in {{item.directory}} with permissions {{item.mode}}"
+    loop: "{{ files }}"  

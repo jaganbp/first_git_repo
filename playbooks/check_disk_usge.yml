@@ -1,0 +1,15 @@
+---
+- name: Checking Disk Usage 
+  hosts: webservers
+  become: true
+
+  tasks: 
+    - name: Storing Disk Details
+      shell: 
+        cmd: df -h | awk 'NR == 5 {print $5}'
+      register: diskUsge
+
+    - name: Display Disk usage if it goes beyond Threshold
+      debug:
+        msg: "Display disk usage: {{ diskUsge.stdout }} " 
+      when: diskUsge.stdout | replace ("%","") | int > 40     

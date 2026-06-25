@@ -1,0 +1,18 @@
+---
+- name: Checking File Existence
+  hosts: webservers
+  become: yes
+  vars: 
+    file_path: "/home/ansible/test1.txt"
+      
+  tasks: 
+    - name: Checking file Exstice
+      stat:
+        path: "file_path"
+      register: file_stat
+
+    - name: Display if the file exist
+      debug:
+        msg: " {{ file_path }} file is Exist "
+      when: file_stat.stat.exists     
+
